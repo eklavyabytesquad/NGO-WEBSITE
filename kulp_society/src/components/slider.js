@@ -32,6 +32,7 @@ const HeroSlider = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [direction, setDirection] = useState('right');
   const [isAnimating, setIsAnimating] = useState(false);
+  const [isPanning, setIsPanning] = useState(true);
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -41,6 +42,16 @@ const HeroSlider = () => {
     return () => clearInterval(timer);
   }, [currentSlide]);
 
+  // Reset panning animation when slide changes
+  useEffect(() => {
+    setIsPanning(true);
+    const timer = setTimeout(() => {
+      setIsPanning(false);
+    }, 4000); // Duration of the panning animation
+
+    return () => clearTimeout(timer);
+  }, [currentSlide]);
+
   const nextSlide = () => {
     if (isAnimating) return;
     setDirection('right');
@@ -48,7 +59,7 @@ const HeroSlider = () => {
     setTimeout(() => {
       setCurrentSlide((prev) => (prev + 1) % slides.length);
       setIsAnimating(false);
-    }, 800);
+    }, 500);
   };
 
   const prevSlide = () => {
@@ -58,7 +69,7 @@ const HeroSlider = () => {
     setTimeout(() => {
       setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length);
       setIsAnimating(false);
-    }, 800);
+    }, 500);
   };
 
   return (
@@ -68,44 +79,66 @@ const HeroSlider = () => {
         {slides.map((slide, index) => (
           <div
             key={slide.id}
-            className={`absolute w-full h-full transition-all duration-800 ease-out transform-gpu
+            className={`absolute w-full h-full transition-all duration-500 ease-out transform-gpu
               ${index === currentSlide ? 
                 'opacity-100 scale-100 translate-x-0' : 
                 direction === 'right' ?
-                  'opacity-0 -translate-x-full scale-95 blur-lg' :
-                  'opacity-0 translate-x-full scale-95 blur-lg'
+                  'opacity-0 -translate-x-full scale-100' :
+                  'opacity-0 translate-x-full scale-100'
               }`}
             style={{
               transformStyle: 'preserve-3d',
               backfaceVisibility: 'hidden',
-              transition: 'all 0.8s cubic-bezier(0.4, 0, 0.2, 1)'
+              transition: 'all 0.5s cubic-bezier(0.4, 0, 0.2, 1)'
             }}
           >
-            {/* Background Image with Black Overlay */}
+            {/* Background Image with Mobile Panning Animation */}
             <div className="absolute inset-0 overflow-hidden">
-              <img
-                src={slide.imageUrl}
-                alt={slide.title}
-                className={`w-full h-full object-cover transform scale-110 transition-transform duration-[2000ms]
-                  ${isAnimating ? 'scale-105' : 'scale-100'}`}
-              />
-              {/* Single light black overlay with gradient */}
-              <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/30" />
+              <div className="w-full h-full relative">
+                <img
+                  src={slide.imageUrl}
+                  alt={slide.title}
+                  className={`w-full h-full object-cover transition-all duration-500
+                    md:scale-110 md:object-cover md:transform-none
+                    ${isAnimating ? 'scale-105' : 'scale-100'}
+                    sm:object-cover sm:object-center
+                    ${index === currentSlide ? 'opacity-100' : 'opacity-0'}
+                  `}
+                  style={{
+                    '@media (max-width: 640px)': {
+                      transform: isPanning ? 'scale(1.2)' : 'scale(1.2)',
+                      transition: 'transform 4s ease-out',
+                    }
+                  }}
+                />
+                <div 
+                  className={`absolute inset-0 w-[120%] h-full left-[-10%]
+                    sm:w-full sm:left-0 transition-transform duration-[4000ms] ease-out
+                    ${isPanning && index === currentSlide ? 'translate-x-[-8.33%]' : 'translate-x-0'}
+                    md:transform-none`}
+                  style={{
+                    background: `url(${slide.imageUrl}) center center/cover no-repeat`,
+                    display: 'block',
+                  }}
+                />
+              </div>
+              {/* Enhanced gradient overlay */}
+              <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/50 to-black/40" />
             </div>
 
             {/* Content Container */}
-            <div className="relative h-full flex flex-col items-start justify-center px-12 md:px-24 max-w-7xl mx-auto">
+            <div className="relative h-full flex flex-col items-start justify-center px-6 sm:px-12 md:px-24 max-w-7xl mx-auto">
               {/* Animated Line with hearts */}
-              <div className="flex items-center gap-2 mb-8">
-                <Heart className={`w-6 h-6 text-white fill-white transition-all duration-1000 transform
+              <div className="flex items-center gap-2 mb-4 sm:mb-8">
+                <Heart className={`w-4 h-4 sm:w-6 sm:h-6 text-white fill-white transition-all duration-500 transform
                   ${isAnimating ? 'scale-0' : 'scale-100'}`} />
-                <div className={`w-24 h-1 bg-white mb-0 transition-all duration-1000 transform
+                <div className={`w-16 sm:w-24 h-0.5 sm:h-1 bg-white mb-0 transition-all duration-500 transform
                   ${isAnimating ? 'scale-x-0' : 'scale-x-100'}`} />
               </div>
 
-              {/* Title with enhanced styling */}
+              {/* Title */}
               <h2
-                className={`text-5xl md:text-7xl font-bold text-white mb-6 transition-all duration-800
+                className={`text-3xl sm:text-5xl md:text-7xl font-bold text-white mb-4 sm:mb-6 transition-all duration-500
                   ${isAnimating ?
                     direction === 'right' ?
                       'opacity-0 -translate-x-full' :
@@ -119,9 +152,9 @@ const HeroSlider = () => {
                 {slide.title}
               </h2>
 
-              {/* Subtitle with enhanced visibility */}
+              {/* Subtitle */}
               <p
-                className={`text-xl md:text-2xl text-gray-100 max-w-2xl mb-8 transition-all duration-800 delay-100
+                className={`text-lg sm:text-xl md:text-2xl text-gray-100 max-w-2xl mb-6 sm:mb-8 transition-all duration-500 delay-100
                   ${isAnimating ?
                     direction === 'right' ?
                       'opacity-0 -translate-x-full' :
@@ -135,9 +168,9 @@ const HeroSlider = () => {
                 {slide.subtitle}
               </p>
 
-              {/* Enhanced 3D Button */}
+              {/* Button */}
               <button
-                className={`group relative px-10 py-4 rounded-full font-semibold text-lg 
+                className={`group relative px-6 sm:px-10 py-3 sm:py-4 rounded-full font-semibold text-base sm:text-lg 
                   transition-all duration-500 transform hover:-translate-y-1 active:translate-y-0
                   ${isAnimating ?
                     'opacity-0 translate-y-10' :
@@ -152,7 +185,7 @@ const HeroSlider = () => {
                   transition-opacity duration-300" />
                 <span className="relative z-10 text-white transition-transform duration-300 group-hover:translate-x-2 inline-flex items-center">
                   {slide.buttonText}
-                  <ArrowRight className="ml-2 w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" />
+                  <ArrowRight className="ml-2 w-4 h-4 sm:w-5 sm:h-5 transition-transform duration-300 group-hover:translate-x-1" />
                 </span>
               </button>
             </div>
@@ -160,19 +193,19 @@ const HeroSlider = () => {
         ))}
       </div>
 
-      {/* Navigation Controls with enhanced visibility */}
-      <div className="absolute bottom-8 left-0 right-0 flex justify-between items-center px-8">
+      {/* Navigation Controls */}
+      <div className="absolute bottom-4 sm:bottom-8 left-0 right-0 flex justify-between items-center px-4 sm:px-8">
         <button
           onClick={prevSlide}
-          className="p-3 rounded-full bg-white/30 hover:bg-pink-400 backdrop-blur-sm 
+          className="p-2 sm:p-3 rounded-full bg-white/30 hover:bg-pink-400 backdrop-blur-sm 
             transition-all duration-300 group shadow-lg hover:-translate-y-1"
         >
-          <ArrowLeft className="w-6 h-6 text-white transition-transform duration-300 
+          <ArrowLeft className="w-4 h-4 sm:w-6 sm:h-6 text-white transition-transform duration-300 
             group-hover:-translate-x-1" />
         </button>
 
-        {/* Enhanced Dots */}
-        <div className="flex space-x-3">
+        {/* Dots */}
+        <div className="flex space-x-2 sm:space-x-3">
           {slides.map((_, index) => (
             <button
               key={index}
@@ -183,18 +216,18 @@ const HeroSlider = () => {
               }}
               className={`transition-all duration-300 rounded-full shadow-lg hover:scale-110
                 ${index === currentSlide ? 
-                  'w-8 h-2 bg-white' : 
-                  'w-2 h-2 bg-white/50 hover:bg-white/70'}`}
+                  'w-6 sm:w-8 h-1.5 sm:h-2 bg-white' : 
+                  'w-1.5 sm:w-2 h-1.5 sm:h-2 bg-white/50 hover:bg-white/70'}`}
             />
           ))}
         </div>
 
         <button
           onClick={nextSlide}
-          className="p-3 rounded-full bg-white/30 hover:bg-pink-400 backdrop-blur-sm 
+          className="p-2 sm:p-3 rounded-full bg-white/30 hover:bg-pink-400 backdrop-blur-sm 
             transition-all duration-300 group shadow-lg hover:-translate-y-1"
         >
-          <ArrowRight className="w-6 h-6 text-white transition-transform duration-300 
+          <ArrowRight className="w-4 h-4 sm:w-6 sm:h-6 text-white transition-transform duration-300 
             group-hover:translate-x-1" />
         </button>
       </div>
