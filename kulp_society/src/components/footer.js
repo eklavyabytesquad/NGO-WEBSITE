@@ -17,7 +17,8 @@ import {
   ChevronDown,
   SendHorizontal,
   Sparkles,
-  Star
+  Star,
+  Github
 } from 'lucide-react';
 
 const BackgroundSVG = () => (
@@ -290,9 +291,81 @@ const Footer = () => {
                 </motion.div>
               ))}
             </div>
-            <motion.p className="text-gray-600 text-sm text-center md:text-right">
-              ©Kulp Society. All rights reserved.
-            </motion.p>
+            <div className="flex flex-col items-center md:items-end space-y-4">
+              <motion.p className="text-gray-600 text-sm">
+                ©Kulp Society. All rights reserved.
+              </motion.p>
+              
+              {/* Credit Line */}
+              <motion.div 
+  initial={{ opacity: 0, y: 20 }}
+  animate={{ opacity: 1, y: 0 }}
+  transition={{ delay: 0.5, duration: 0.5 }}
+  className="flex justify-center items-center w-full text-sm my-4"
+>
+  <motion.div
+    className="flex items-center justify-center bg-gradient-to-r from-pink-100/70 via-purple-100/70 to-pink-100/70 backdrop-blur-md px-6 py-3 rounded-full shadow-lg border border-white/20"
+    whileHover={{ 
+      scale: 1.05, 
+      boxShadow: "0 10px 25px -5px rgba(219, 39, 119, 0.2)",
+      background: "linear-gradient(to right, rgba(255, 240, 245, 0.8), rgba(250, 230, 250, 0.8), rgba(255, 240, 245, 0.8))"
+    }}
+  >
+    <motion.div 
+      initial={{ opacity: 0.5 }}
+      whileHover={{ opacity: 1 }}
+      className="flex items-center gap-2 flex-wrap justify-center"
+    >
+      <motion.span 
+        className="text-gray-600"
+        whileHover={{ color: "#db2777" }}
+      >
+        This website is designed with
+      </motion.span>
+      <motion.div className="flex items-center gap-1">
+        <motion.span 
+          className="font-bold text-transparent bg-clip-text bg-gradient-to-r from-pink-500 via-purple-500 to-pink-500"
+          whileHover={{ 
+            scale: 1.1,
+            textShadow: "0 0 8px rgba(219, 39, 119, 0.3)"
+          }}
+        >
+          ♥
+        </motion.span>
+        <motion.span 
+          className="font-bold text-transparent bg-clip-text bg-gradient-to-r from-pink-500 via-purple-500 to-pink-500"
+          whileHover={{ 
+            scale: 1.1,
+            textShadow: "0 0 8px rgba(219, 39, 119, 0.3)"
+          }}
+        >
+          by Eklavya Singh
+        </motion.span>
+      </motion.div>
+      <motion.span 
+        className="text-gray-600"
+        whileHover={{ color: "#db2777" }}
+      >
+        for a cause that matters
+      </motion.span>
+      <motion.a
+        href="https://github.com/eklavyabytesquad/"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-pink-500/10 text-pink-500 hover:text-pink-600 transition-colors"
+        whileHover={{ 
+          scale: 1.1,
+          backgroundColor: "rgba(219, 39, 119, 0.2)"
+        }}
+        whileTap={{ scale: 0.95 }}
+      >
+        <Github className="w-4 h-4" />
+        <span className="text-xs font-semibold">Follow</span>
+      </motion.a>
+    </motion.div>
+  </motion.div>
+</motion.div>
+            </div>
           </div>
         </motion.div>
       </motion.div>
