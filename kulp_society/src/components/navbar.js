@@ -72,12 +72,14 @@ const Navbar = () => {
                   </div>
                 </div>
               </div>
-              <div className="flex flex-col space-y-1">
+              <div className="flex flex-col justify-center">
                 <div className="font-bold text-2xl tracking-wider text-pink-600 
-                  hover:text-pink-700 transition-colors duration-300 drop-shadow-sm">
+                  hover:text-pink-700 transition-colors duration-300 drop-shadow-sm 
+                  leading-tight">
                   KULP SOCIETY
                 </div>
-                <div className="text-base font-bold tracking-wide font-devanagari">
+                <div className="text-sm font-medium tracking-wide font-devanagari 
+                  leading-snug mt-1">
                   <span className="text-gray-600">सं</span>
                   <span className="text-pink-600">कल्प</span>
                   <span className="text-gray-600"> से सशक्त नारी, सहयोग से समृद्ध </span>
