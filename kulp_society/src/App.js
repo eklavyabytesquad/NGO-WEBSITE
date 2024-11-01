@@ -5,6 +5,7 @@ import Navbar from "./components/navbar";
 import Footer from './components/footer';
 import HomePage from "./pages/HomePage";
 import PreLoader from './pages/PreLoader';
+import LoginPage from './pages/LoginPage';
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
@@ -24,6 +25,7 @@ function App() {
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="*" element={<NotFoundPage />} />
+            <Route path="/login" element={<LoginPage />} />
           </Routes>
           <Footer />
         </div>
