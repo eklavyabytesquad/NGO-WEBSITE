@@ -72,9 +72,49 @@ const HeroSlider = () => {
     }, 500);
   };
 
+  // Same ActionButton component as before
+  const ActionButton = ({ text }) => (
+    <button
+      className={`group relative overflow-hidden px-6 sm:px-8 py-2.5 sm:py-3.5 rounded-full 
+        font-semibold text-sm sm:text-base transition-all duration-300 transform 
+        hover:-translate-y-1 active:translate-y-0 hover:scale-105 active:scale-100
+        ${isAnimating ? 'opacity-0 translate-y-10' : 'opacity-100 translate-y-0'}`}
+      style={{
+        boxShadow: '0 3px 0 rgb(219 39 119), 0 6px 12px rgba(0,0,0,0.2)',
+      }}
+    >
+      {/* Button background gradients */}
+      <div className="absolute inset-0 bg-gradient-to-r from-pink-500 via-pink-400 to-pink-500 
+        opacity-100 transition-opacity duration-300" />
+      
+      {/* Hover gradient overlay */}
+      <div className="absolute inset-0 bg-gradient-to-r from-pink-600 via-pink-500 to-pink-600 
+        opacity-0 group-hover:opacity-100 transition-all duration-300" />
+      
+      {/* Shine effect */}
+      <div className="absolute inset-0 opacity-0 group-hover:opacity-20 
+        group-hover:translate-x-full transition-all duration-1000 
+        bg-gradient-to-r from-transparent via-white to-transparent skew-x-12" />
+      
+      {/* Button content */}
+      <span className="relative z-10 flex items-center justify-center gap-2 text-white 
+        font-semibold tracking-wide transition-transform duration-300 
+        group-hover:translate-x-1">
+        {text}
+        <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 transition-transform duration-300 
+          group-hover:translate-x-1" strokeWidth={2.5} />
+      </span>
+      
+      {/* Button border glow */}
+      <div className="absolute inset-0 -z-10 rounded-full opacity-40 blur-sm 
+        bg-gradient-to-r from-pink-400 to-pink-600 group-hover:opacity-60 
+        transition-opacity duration-300" />
+    </button>
+  );
+
   return (
     <div className="relative w-full h-[calc(100vh-64px)] overflow-hidden bg-pink-50 mt-16">
-      {/* Slides Container */}
+      {/* Main content same as before... */}
       <div className="relative w-full h-full">
         {slides.map((slide, index) => (
           <div
@@ -128,7 +168,7 @@ const HeroSlider = () => {
 
             {/* Content Container */}
             <div className="relative h-full flex flex-col items-start justify-center px-6 sm:px-12 md:px-24 max-w-7xl mx-auto">
-              {/* Animated Line with hearts */}
+              {/* Previous content remains the same... */}
               <div className="flex items-center gap-2 mb-4 sm:mb-8">
                 <Heart className={`w-4 h-4 sm:w-6 sm:h-6 text-white fill-white transition-all duration-500 transform
                   ${isAnimating ? 'scale-0' : 'scale-100'}`} />
@@ -136,7 +176,6 @@ const HeroSlider = () => {
                   ${isAnimating ? 'scale-x-0' : 'scale-x-100'}`} />
               </div>
 
-              {/* Title */}
               <h2
                 className={`text-3xl sm:text-5xl md:text-7xl font-bold text-white mb-4 sm:mb-6 transition-all duration-500
                   ${isAnimating ?
@@ -152,7 +191,6 @@ const HeroSlider = () => {
                 {slide.title}
               </h2>
 
-              {/* Subtitle */}
               <p
                 className={`text-lg sm:text-xl md:text-2xl text-gray-100 max-w-2xl mb-6 sm:mb-8 transition-all duration-500 delay-100
                   ${isAnimating ?
@@ -168,44 +206,32 @@ const HeroSlider = () => {
                 {slide.subtitle}
               </p>
 
-              {/* Button */}
-              <button
-                className={`group relative px-6 sm:px-10 py-3 sm:py-4 rounded-full font-semibold text-base sm:text-lg 
-                  transition-all duration-500 transform hover:-translate-y-1 active:translate-y-0
-                  ${isAnimating ?
-                    'opacity-0 translate-y-10' :
-                    'opacity-100 translate-y-0'
-                  }`}
-                style={{
-                  boxShadow: '0 4px 0 rgb(219 39 119), 0 8px 16px rgba(0,0,0,0.2)',
-                }}
-              >
-                <div className="absolute inset-0 bg-gradient-to-r from-pink-400 to-pink-500 rounded-full" />
-                <div className="absolute inset-0 bg-gradient-to-r from-pink-500 to-pink-600 rounded-full opacity-0 group-hover:opacity-100 
-                  transition-opacity duration-300" />
-                <span className="relative z-10 text-white transition-transform duration-300 group-hover:translate-x-2 inline-flex items-center">
-                  {slide.buttonText}
-                  <ArrowRight className="ml-2 w-4 h-4 sm:w-5 sm:h-5 transition-transform duration-300 group-hover:translate-x-1" />
-                </span>
-              </button>
+              <ActionButton text={slide.buttonText} />
             </div>
           </div>
         ))}
       </div>
 
-      {/* Navigation Controls */}
-      <div className="absolute bottom-4 sm:bottom-8 left-0 right-0 flex justify-between items-center px-4 sm:px-8">
+      {/* Updated Navigation Controls with better mobile positioning and theme-matched styling */}
+      <div className="absolute bottom-16 sm:bottom-12 md:bottom-16 left-0 right-0 flex justify-between items-center 
+        px-4 sm:px-8 max-w-7xl mx-auto">
         <button
           onClick={prevSlide}
-          className="p-2 sm:p-3 rounded-full bg-white/30 hover:bg-pink-400 backdrop-blur-sm 
-            transition-all duration-300 group shadow-lg hover:-translate-y-1"
+          className="p-2 sm:p-3 rounded-full bg-pink-500/30 hover:bg-pink-500 backdrop-blur-sm 
+            transition-all duration-300 group shadow-lg hover:-translate-y-1
+            border border-pink-300/30 hover:border-pink-400"
+          style={{
+            WebkitBackdropFilter: 'blur(4px)',
+            backdropFilter: 'blur(4px)'
+          }}
         >
-          <ArrowLeft className="w-4 h-4 sm:w-6 sm:h-6 text-white transition-transform duration-300 
+          <ArrowLeft className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 text-white transition-transform duration-300 
             group-hover:-translate-x-1" />
         </button>
 
-        {/* Dots */}
-        <div className="flex space-x-2 sm:space-x-3">
+        {/* Theme-matched dots */}
+        <div className="flex space-x-2 sm:space-x-3 bg-pink-500/20 backdrop-blur-sm px-3 py-2 rounded-full
+          border border-pink-300/30">
           {slides.map((_, index) => (
             <button
               key={index}
@@ -216,18 +242,23 @@ const HeroSlider = () => {
               }}
               className={`transition-all duration-300 rounded-full shadow-lg hover:scale-110
                 ${index === currentSlide ? 
-                  'w-6 sm:w-8 h-1.5 sm:h-2 bg-white' : 
-                  'w-1.5 sm:w-2 h-1.5 sm:h-2 bg-white/50 hover:bg-white/70'}`}
+                  'w-6 sm:w-8 h-1.5 sm:h-2 bg-pink-400 hover:bg-pink-500' : 
+                  'w-1.5 sm:w-2 h-1.5 sm:h-2 bg-pink-300/50 hover:bg-pink-400/70'}`}
             />
           ))}
         </div>
 
         <button
           onClick={nextSlide}
-          className="p-2 sm:p-3 rounded-full bg-white/30 hover:bg-pink-400 backdrop-blur-sm 
-            transition-all duration-300 group shadow-lg hover:-translate-y-1"
+          className="p-2 sm:p-3 rounded-full bg-pink-500/30 hover:bg-pink-500 backdrop-blur-sm 
+            transition-all duration-300 group shadow-lg hover:-translate-y-1
+            border border-pink-300/30 hover:border-pink-400"
+          style={{
+            WebkitBackdropFilter: 'blur(4px)',
+            backdropFilter: 'blur(4px)'
+          }}
         >
-          <ArrowRight className="w-4 h-4 sm:w-6 sm:h-6 text-white transition-transform duration-300 
+          <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 text-white transition-transform duration-300 
             group-hover:translate-x-1" />
         </button>
       </div>

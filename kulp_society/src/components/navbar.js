@@ -26,7 +26,7 @@ const Navbar = () => {
 
   const navItems = [
     { title: 'Home', icon: <Home className="w-5 h-5" />, href: '/' },
-    { title: 'About', icon: <Heart className="w-5 h-5" />, href: '/about' },
+    { title: 'Blogs', icon: <Heart className="w-5 h-5" />, href: '/Blogs' },
     {
       title: 'Events',
       icon: <Calendar className="w-5 h-5" />,

@@ -56,7 +56,7 @@ const TreeOverlayComponent = () => {
     { x: '55%', y: '50%', scale: 1.05, infoPosition: 'left' }
   ];
 
-  // Info Card Component
+  // Info Card Component - Now smaller and more compact
   const InfoCard = ({ info, position, onClose }) => {
     const isRight = position === 'right';
     
@@ -65,8 +65,8 @@ const TreeOverlayComponent = () => {
         initial={{ opacity: 0, x: isRight ? -20 : 20 }}
         animate={{ opacity: 1, x: 0 }}
         exit={{ opacity: 0, x: isRight ? -20 : 20 }}
-        className={`fixed z-50 w-48 md:w-64 bg-white rounded-lg shadow-xl p-4 border border-pink-200
-          ${isRight ? 'ml-4' : 'mr-4'}`}
+        className={`fixed z-50 w-40 bg-white rounded-lg shadow-xl p-3 border border-pink-200
+          ${isRight ? 'ml-2' : 'mr-2'}`}
         style={{ 
           top: '50%', 
           transform: 'translateY(-50%)',
@@ -78,34 +78,34 @@ const TreeOverlayComponent = () => {
             e.stopPropagation();
             onClose();
           }}
-          className="absolute -top-2 -right-2 w-6 h-6 bg-pink-500 text-white rounded-full 
+          className="absolute -top-2 -right-2 w-5 h-5 bg-pink-500 text-white rounded-full 
             flex items-center justify-center hover:bg-pink-600 z-50"
         >
-          <X size={14} />
+          <X size={12} />
         </button>
         
-        <h3 className="font-bold text-pink-700 mb-2">{info.title}</h3>
-        <p className="text-sm text-gray-600">{info.description}</p>
+        <h3 className="font-bold text-pink-700 text-sm mb-1">{info.title}</h3>
+        <p className="text-xs text-gray-600">{info.description}</p>
         
-        <div className={`absolute top-1/2 ${isRight ? 'left-0' : 'right-0'} w-4 h-0.5 bg-pink-200
+        <div className={`absolute top-1/2 ${isRight ? 'left-0' : 'right-0'} w-2 h-0.5 bg-pink-200
           transform -translate-y-1/2 ${isRight ? '-translate-x-full' : 'translate-x-full'}`} />
       </motion.div>
     );
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-green-50 to-pink-50 px-4 py-8 relative overflow-hidden">
+    <div className="h-auto bg-gradient-to-b from-green-50 to-pink-50 px-4 py-4 relative overflow-hidden">
       <motion.div 
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="text-center mb-8"
+        className="text-center mb-4"
       >
         <h1 className="text-3xl font-bold">
           Join the <span className="text-pink-600">Movement</span>
         </h1>
       </motion.div>
 
-      <div className="relative w-full max-w-2xl mx-auto mt-8">
+      <div className="relative w-full max-w-2xl mx-auto mt-4">
         <div className="relative aspect-[4/3] w-full">
           {/* Falling circles animation - Now behind the tree */}
           <div className="absolute inset-0 z-0 overflow-hidden">
@@ -242,7 +242,7 @@ const TreeOverlayComponent = () => {
         </div>
       </div>
 
-      <div className="mt-12 space-y-4 max-w-xs mx-auto relative z-30">
+      <div className="mt-4 space-y-2 max-w-xs mx-auto relative z-30">
         <motion.button
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
