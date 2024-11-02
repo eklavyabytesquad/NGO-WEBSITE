@@ -142,7 +142,7 @@ const Footer = () => {
               transition={{ duration: 0.5 }}
             >
               <h3 className="text-2xl font-bold text-pink-600 flex items-center gap-2">
-                KULP SOCIETY
+                KALP SOCIETY
                 <motion.div
                   animate={{
                     rotate: [0, 360],
@@ -212,7 +212,7 @@ const Footer = () => {
                   {[
                     { icon: <Phone />, text: "+91-9557173600" },
                     { icon: <Mail />, text: "eklavyasingh9870@gmail.com" },
-                    { icon: <MapPin />, text: "Kulp Society Aligarh - 202001,UTTAR PRADESH" }
+                    { icon: <MapPin />, text: "Kalp Society Aligarh - 202001,UTTAR PRADESH" }
                   ].map((item, index) => (
                     <motion.li
                       key={index}
@@ -293,7 +293,7 @@ const Footer = () => {
             </div>
             <div className="flex flex-col items-center md:items-end space-y-4">
               <motion.p className="text-gray-600 text-sm">
-                ©Kulp Society. All rights reserved.
+                ©Kalp Society. All rights reserved.
               </motion.p>
               
               {/* Credit Line */}

@@ -55,7 +55,7 @@ const Navbar = () => {
                   <div className="relative w-auto h-16 perspective-1000">
                     <img
                       src={logo}
-                      alt="KULP SOCIETY Logo"
+                      alt="KALP SOCIETY Logo"
                       className="h-full w-auto object-contain drop-shadow-xl
                         transform transition-transform duration-300 
                         group-hover:scale-105"
@@ -76,7 +76,7 @@ const Navbar = () => {
                 <div className="font-bold text-2xl tracking-wider text-pink-600 
                   hover:text-pink-700 transition-colors duration-300 drop-shadow-sm 
                   leading-tight">
-                  KULP SOCIETY
+                  KALP SOCIETY
                 </div>
                 <div className="text-sm font-medium tracking-wide font-devanagari 
                   leading-snug mt-1">
