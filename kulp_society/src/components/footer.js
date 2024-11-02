@@ -211,7 +211,7 @@ const Footer = () => {
                 <ul className="space-y-4">
                   {[
                     { icon: <Phone />, text: "+91-9557173600" },
-                    { icon: <Mail />, text: "eklavyasingh9870@gmail.com" },
+                    { icon: <Mail />, text: "kalpna.pandit44@gmail.com" },
                     { icon: <MapPin />, text: "Kalp Society Aligarh - 202001,UTTAR PRADESH" }
                   ].map((item, index) => (
                     <motion.li
